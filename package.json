@@ -1,0 +1,28 @@
+{
+    "name" : "sesame",
+    "version" : "0.0.1",
+    "description" : "Session middleware for lazy people.",
+    "main" : "./index.js",
+    "repository" : {
+        "type" : "git",
+        "url" : "http://github.com/substack/node-sesame.git"
+    },
+    "dependencies" : {
+        "uuid-pure" : "*",
+        "resware" : "*",
+        "node-proxy" : ">=0.3.2"
+    },
+    "keywords" : [
+        "sessions",
+        "web",
+        "cookies",
+        "http"
+    ],
+    "author" : {
+        "name" : "James Halliday",
+        "email" : "mail@substack.net",
+        "url" : "http://substack.net"
+    },
+    "license" : "MIT/X11",
+    "engine" : ["node >=0.2.0"]
+}
