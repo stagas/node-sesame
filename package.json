@@ -10,6 +10,8 @@
     "dependencies" : {
         "uuid-pure" : "*",
         "resware" : "*",
+        "connect" : ">=0.2.4",
+        "traverse" : ">=0.2.3",
         "node-proxy" : ">=0.3.2"
     },
     "keywords" : [
