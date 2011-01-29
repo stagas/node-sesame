@@ -53,6 +53,26 @@ Check out
 [the examples/ directory](https://github.com/substack/node-sesame/tree/master/examples)
 for more examples.
 
+usage
+=====
+
+sesame(options)
+---------------
+
+Options can be:
+
+* store - the storage engine to use
+
+* cookieName - the cookie name to use, defaults to `session_id`
+
+* sessions - the sessions to start with if you'd rather load them yourself
+
+requests
+--------
+
+Sesame adds `session`, `sessions`, and `sessionID` to the `req` object.
+You can modify `req.sessions[req.sessionID]` just the same as `req.session`.
+
 the secret sauce
 ================
 
