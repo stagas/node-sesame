@@ -1,12 +1,12 @@
 var connect = require('connect');
 var webserver = connect.createServer();
 
-var store = new(require('supermarket'))({
-    filename : __dirname + '/supermarket.db',
-    json : true,
-});
-
-webserver.use(require('sesame')({ store : store }));
+webserver.use(require('sesame')({
+    store : new(require('supermarket'))({
+        filename : __dirname + '/supermarket.db',
+        json : true,
+    })
+}));
 
 webserver.use(connect.router(function (app) {
     app.get('/', function (req, res) {
