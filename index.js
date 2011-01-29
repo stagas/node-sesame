@@ -1,17 +1,18 @@
 var uuid = require('uuid-pure').uuid;
 var resware = require('resware');
 var cookieDecoder = require('connect').cookieDecoder();
+var Hash = require('traverse/hash');
 
 exports = module.exports = function (options) {
     options = options || {};
     var cookieName = options.cookieName || 'session_id';
-    var store = options.store;
     var sessions = exports.wrap(store, options.sessions || {});
+    var store = options.store;
     
-    if (store && Object.keys(sessions).length === 0) {
-        store.all(function (err, res) {
+    if (store && store.all) {
+        store.all(function (err, keys, values) {
             if (err) console.error(err)
-            else sessions = exports.wrap(store, res)
+            else sessions = exports.wrap(store, Hash.zip(keys, values))
         });
     }
     
