@@ -51,7 +51,8 @@ exports = module.exports = function (options) {
 var Proxy = require('node-proxy');
 exports.wrap = function (store, sessions) {
     var taint = {};
-    var set = (store.set || store.save).bind(store);
+    var set = store ? (store.set || store.save).bind(store) : null;
+    
     function update (key) {
         if (!taint[key] && store) {
             process.nextTick(function () {
