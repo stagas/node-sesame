@@ -5,14 +5,19 @@ var Hash = require('traverse/hash');
 
 exports = module.exports = function (options) {
     options = options || {};
+    var store = options.store;
     var cookieName = options.cookieName || 'session_id';
     var sessions = exports.wrap(store, options.sessions || {});
-    var store = options.store;
     
     if (store && store.all) {
-        store.all(function (err, keys, values) {
+        store.all(function (err, res, values) {
             if (err) console.error(err)
-            else sessions = exports.wrap(store, Hash.zip(keys, values))
+            else if (values) {
+                sessions = exports.wrap(store, Hash.zip(res, values));
+            }
+            else {
+                sessions = exports.wrap(store, res);
+            }
         });
     }
     
@@ -38,10 +43,14 @@ var Proxy = require('node-proxy');
 exports.wrap = function (store, sessions) {
     var taint = {};
     function update (key) {
-        if (taint[key] && store) {
+        if (!taint[key] && store) {
             process.nextTick(function () {
                 if (sessions.hasOwnProperty(key)) {
-                    store.set(key, sessions[key])
+                    (store.set || store.save).bind(store)(
+                        key, sessions[key], function (err) {
+                            if (err) console.error(err)
+                        }
+                    )
                 }
                 else {
                     store.remove(key);
