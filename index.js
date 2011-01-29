@@ -13,17 +13,19 @@ exports = module.exports = function (options) {
         store.all(function (err, xs, ys) {
             if (err) console.error(err)
             else if (Array.isArray(xs) && Array.isArray(ys)) {
-                // the nstore way
-                var keys = ys.map(function (y) { return y.key });
-                sessions = exports.wrap(store, Hash.zip(keys, xs));
-            }
-            else if (Array.isArray(xs) && typeof ys === 'object') {
-                // the supermarket way
-                sessions = exports.wrap(store, Hash.zip(xs, ys));
+                if (typeof xs[0] === 'string') {
+                    // the supermarket way
+                    sessions = exports.wrap(store, Hash.zip(xs, ys));
+                }
+                else {
+                    // the nstore way
+                    var keys = ys.map(function (y) { return y.key });
+                    sessions = exports.wrap(store, Hash.zip(keys, xs));
+                }
             }
             else {
                 // a guess
-                sessions = exports.wrap(store, keys);
+                sessions = exports.wrap(store, xs);
             }
         })
     }
