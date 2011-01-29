@@ -10,15 +10,22 @@ exports = module.exports = function (options) {
     var sessions = exports.wrap(store, options.sessions || {});
     
     if (store && store.all) {
-        store.all(function (err, res, values) {
+        store.all(function (err, xs, ys) {
             if (err) console.error(err)
-            else if (values) {
-                sessions = exports.wrap(store, Hash.zip(res, values));
+            else if (Array.isArray(xs) && Array.isArray(ys)) {
+                // the nstore way
+                var keys = ys.map(function (y) { return y.key });
+                sessions = exports.wrap(store, Hash.zip(keys, xs));
+            }
+            else if (Array.isArray(xs) && typeof ys === 'object') {
+                // the supermarket way
+                sessions = exports.wrap(store, Hash.zip(xs, ys));
             }
             else {
-                sessions = exports.wrap(store, res);
+                // a guess
+                sessions = exports.wrap(store, keys);
             }
-        });
+        })
     }
     
     return function (req, res, next) {
@@ -42,15 +49,14 @@ exports = module.exports = function (options) {
 var Proxy = require('node-proxy');
 exports.wrap = function (store, sessions) {
     var taint = {};
+    var set = (store.set || store.save).bind(store);
     function update (key) {
         if (!taint[key] && store) {
             process.nextTick(function () {
                 if (sessions.hasOwnProperty(key)) {
-                    (store.set || store.save).bind(store)(
-                        key, sessions[key], function (err) {
-                            if (err) console.error(err)
-                        }
-                    )
+                    set(key, sessions[key], function (err) {
+                        if (err) console.error(err)
+                    });
                 }
                 else {
                     store.remove(key);

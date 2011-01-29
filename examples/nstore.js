@@ -1,8 +1,9 @@
 var connect = require('connect');
 var webserver = connect.createServer();
 
+var store = require('nStore')(__dirname + '/nstore.db');
 webserver.use(require('sesame')({
-    store : require('nstore').new(__dirname + '/nstore.db')
+    store : store
 }));
 
 webserver.use(connect.router(function (app) {
