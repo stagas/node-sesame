@@ -37,13 +37,15 @@ exports = module.exports = function (options) {
         
         var id = req.cookies[cookieName];
         if (!id || !sessions[id]) {
-            id = req.sessionID = uuid(64);
+            id = uuid(64);
             res.setCookie(cookieName, id);
             req.cookies[cookieName] = id;
             sessions[id] = {};
         }
         
+        req.sessionID = id;
         req.session = sessions[id];
+        req.sessions = sessions;
         next();
     }
 };
