@@ -44,8 +44,17 @@ exports = module.exports = function (options) {
         }
         
         req.sessionID = id;
-        req.session = sessions[id];
         req.sessions = sessions;
+        
+        Object.defineProperty(req, 'session', {
+            get : function () {
+                return sessions[id];
+            },
+            set : function (s) {
+                sessions[id] = s;
+            }
+        });
+        
         next();
     }
 };
