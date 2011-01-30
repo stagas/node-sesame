@@ -52,7 +52,7 @@ exports = module.exports = function (options) {
             },
             set : function (s) {
                 sessions[id] = s;
-            }
+            },
         });
         
         next();

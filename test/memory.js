@@ -82,7 +82,12 @@ exports.sesame = function () {
         })
         .seq(function (id) {
             var next = this;
-            http.get({ port : port, path : '/sign-out' }, function (res) {
+            var opts = {
+                port : port,
+                path : '/sign-out',
+                headers : { Cookie : 'session_id=' + id },
+            };
+            http.get(opts, function (res) {
                 assert.ok(!res.headers['set-cookie']);
                 assert.eql(res.headers['content-type'], 'text/html');
                 res.on('data', function (body) {
@@ -125,7 +130,7 @@ function server (store) {
         });
         
         app.get('/sign-out', function (req, res) {
-            res.session = {};
+            req.session = {};
             res.writeHead(200, { 'Content-Type' : 'text/html' });
             res.end('ok');
         });
