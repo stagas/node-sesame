@@ -73,6 +73,12 @@ requests
 Sesame adds `session`, `sessions`, and `sessionID` to the `req` object.
 You can modify `req.sessions[req.sessionID]` just the same as `req.session`.
 
+If you assign a new value to `req.session` like this:
+
+    req.session = { x : 55 };
+
+it will also just work, even when using a persistent store.
+
 the secret sauce
 ================
 

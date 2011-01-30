@@ -1,5 +1,4 @@
 var sesame = require('sesame');
-var Store = require('supermarket');
 var Seq = require('seq');
 
 var connect = require('connect');
