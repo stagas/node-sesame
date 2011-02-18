@@ -11,7 +11,7 @@
         "uuid-pure" : ">=1.0.3",
         "resware" : "*",
         "connect" : ">=0.2.4",
-        "traverse" : ">=0.2.3",
+        "hashish" : ">=0.0.2",
         "node-proxy" : ">=0.3.2"
     },
     "keywords" : [

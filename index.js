@@ -1,7 +1,7 @@
 var uuid = require('uuid-pure').newId;
 var resware = require('resware');
 var cookieDecoder = require('connect').cookieDecoder();
-var Hash = require('traverse/hash');
+var Hash = require('hashish');
 
 exports = module.exports = function (options) {
     options = options || {};
