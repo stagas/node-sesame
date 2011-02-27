@@ -1,6 +1,6 @@
 {
     "name" : "sesame",
-    "version" : "0.0.5",
+    "version" : "0.0.6",
     "description" : "Session middleware for lazy people.",
     "main" : "./index.js",
     "repository" : {
