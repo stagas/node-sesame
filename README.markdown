@@ -79,6 +79,29 @@ If you assign a new value to `req.session` like this:
 
 it will also just work, even when using a persistent store.
 
+
+To empty the `session`, you just have to:
+
+    req.session = {}
+
+known limitations
+------------------
+
+* Problem using JSON.stringify(`req.session`);
+
+Because of harmony proxies (see below), you can not use directly 
+
+    JSON.stringify(req.session); 
+
+
+If you want do do that, you have to copie data into a new object:
+
+    var sessionData={}
+    sessionData.foo=req.session.foo;
+    sessionData.foo=req.session.bar;
+
+
+
 the secret sauce
 ================
 
@@ -87,3 +110,5 @@ nested elements in `req.session`, you may be asking yourself?
 
 Under the hood, harmony proxies trap updates to the `req.session` object to keep
 the sessions on disk in sync with the in-memory sessions.
+
+
