@@ -80,14 +80,14 @@ If you assign a new value to `req.session` like this:
 it will also just work, even when using a persistent store.
 
 
-To empty the session, you just have to:
+To empty the `session`, you just have to:
 
     req.session = {}
 
-knowns limitations
+known limitations
 ------------------
 
-* Problem using JSON.stringify(req.session);
+* Problem using JSON.stringify(`req.session`);
 
 Because of harmony proxies (see below), you can not use directly 
 
