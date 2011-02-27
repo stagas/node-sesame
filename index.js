@@ -88,7 +88,10 @@ exports.wrap = function (store, sessions) {
         
         return Proxy.create({
             get : function (recv, name) {
-                return wrap(obj[name])
+                if (name === 'toJSON' && !obj.hasOwnProperty(name)) {
+                    return function () { return obj };
+                }
+                else return wrap(obj[name]);
             },
             set : function (recv, name, value) {
                 setTaint();
@@ -112,7 +115,10 @@ exports.wrap = function (store, sessions) {
     
     return Proxy.create({
         get : function (recv, name) {
-            return wrapRoot(name, sessions[name]);
+            if (name === 'toJSON' && !sessions.hasOwnProperty(name)) {
+                return function () { return sessions }
+            }
+            else return wrapRoot(name, sessions[name])
         },
         set : function (recv, name, value) {
             sessions[name] = value;

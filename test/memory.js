@@ -6,7 +6,7 @@ var http = require('http');
 
 var assert = require('assert');
 
-exports.sesame = function () {
+exports.memory = function () {
     var port = 10000 + Math.floor(Math.random() * (65536 - 10000));
     
     var web = server();
