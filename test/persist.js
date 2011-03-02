@@ -132,7 +132,7 @@ exports.sesame = function () {
 
 function server (store) {
     var webserver = connect.createServer();
-    webserver.use(connect.bodyDecoder());
+    webserver.use(connect.bodyParser());
     webserver.use(sesame({ store : store }));
     
     webserver.use(connect.router(function (app) {

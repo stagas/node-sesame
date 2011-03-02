@@ -1,6 +1,6 @@
 var uuid = require('uuid-pure').newId;
 var resware = require('resware');
-var cookieDecoder = require('connect').cookieDecoder();
+var cookieParser = require('connect').cookieParser();
 var Hash = require('hashish');
 
 exports = module.exports = function (options) {
@@ -33,7 +33,7 @@ exports = module.exports = function (options) {
     return function (req, res, next) {
         // hackishly load some middlewares if not already loaded
         if (!res.setCookie) resware.wrap(res);
-        if (!req.cookies) cookieDecoder(req, res, function () {});
+        if (!req.cookies) cookieParser(req, res, function () {});
         
         var id = req.cookies[cookieName];
         if (!id || !sessions[id]) {
